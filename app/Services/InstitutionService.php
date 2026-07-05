@@ -9,28 +9,66 @@ class InstitutionService
     /**
      * Create a new institution.
      */
-    public function create(array $data): Institution
-    {
+public function create(array $data): Institution
+{
+    return DB::transaction(function () use ($data) {
+
+        if(isset($data['logo'])){
+
+            $data['logo'] = $data['logo']->store(
+                'institutions',
+                'public'
+            );
+
+        }
+
         return Institution::create($data);
-    }
+
+    });
+}
 
     /**
      * Update an existing institution.
      */
-    public function update(Institution $institution, array $data): Institution
-    {
+public function update(
+    Institution $institution,
+    array $data
+): Institution {
+
+    return DB::transaction(function () use ($institution, $data) {
+
+        if (
+            isset($data['logo'])
+        ) {
+
+            if ($institution->logo) {
+
+                Storage::disk('public')
+                    ->delete($institution->logo);
+
+            }
+
+            $data['logo'] = $data['logo']
+                ->store('institutions', 'public');
+        }
+
         $institution->update($data);
 
-        return $institution->fresh();
-    }
+        return $institution->refresh();
+
+    });
+}
 
     /**
      * Soft delete an institution.
      */
-    public function delete(Institution $institution): bool
-    {
-        return $institution->delete();
-    }
+public function delete(
+    Institution $institution
+): void {
+
+    $institution->delete();
+
+}
 
     /**
      * Restore a soft-deleted institution.

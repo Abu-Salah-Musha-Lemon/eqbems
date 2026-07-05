@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\InstitutionController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -49,12 +51,13 @@ Route::middleware([
 
 // });
 Route::middleware([
-    'auth',
-    'permission:institution.view'
-])
-->group(function(){
+    'auth'
+])->group(function () {
 
-    Route::resource('institutions', InstitutionController::class);
+    Route::resource(
+        'institutions',
+        InstitutionController::class
+    );
 
 });
 
