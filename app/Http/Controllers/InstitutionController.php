@@ -9,44 +9,59 @@ use App\Services\InstitutionService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 class InstitutionController extends Controller
 {
-    public function __construct(
-        private readonly InstitutionService $institutionService
-    ) {}
+    use AuthorizesRequests;
+    // public function __construct(
+    //     private readonly InstitutionService $institutionService
+    // ) {}
 
     /**
      * Display a listing of institutions.
      */
     public function index(): View
     {
-        $institutions = Institution::latest()->paginate(10);
+        $this->authorize('viewAny', Institution::class);
 
-        return view('institutions.index', compact('institutions'));
+        $institutions = $this->institutionService->paginate();
+
+        return view(
+            'institutions.index',
+            compact('institutions')
+        );
     }
 
     /**
      * Show the form for creating a new institution.
      */
     public function create(): View
-    {
-        return view('institutions.create');
-    }
+        {
+            $this->authorize('create', Institution::class);
+
+            return view('institutions.create');
+        }
 
     /**
      * Store a newly created institution.
      */
-    public function store(StoreInstitutionRequest $request): RedirectResponse
-    {
-        $this->institutionService->create(
-            $request->validated()
+    public function store(
+        StoreInstitutionRequest $request
+    ): RedirectResponse {
+
+        $this->authorize(
+            'create',
+            Institution::class
         );
+
+        $this->institutionService
+            ->create($request->validated());
 
         return redirect()
             ->route('institutions.index')
             ->with('success', 'Institution created successfully.');
     }
-
     /**
      * Display the specified institution.
      */
@@ -60,33 +75,39 @@ class InstitutionController extends Controller
      */
     public function edit(Institution $institution): View
     {
+        $this->authorize(
+            'update',
+            $institution
+        );
         return view('institutions.edit', compact('institution'));
     }
 
     /**
      * Update the specified institution.
      */
-    public function update(
-        UpdateInstitutionRequest $request,
-        Institution $institution
-    ): RedirectResponse {
+        public function update(
+            UpdateInstitutionRequest $request,
+            Institution $institution
+        ): RedirectResponse {
 
-        $this->institutionService->update(
-            $institution,
-            $request->validated()
-        );
+            $this->authorize('update', $institution);
 
-        return redirect()
-            ->route('institutions.index')
-            ->with('success', 'Institution updated successfully.');
-    }
+            $this->institutionService->update(
+                $institution,
+                $request->validated()
+            );
+
+            return redirect()
+                ->route('institutions.index')
+                ->with('success', 'Institution updated successfully.');
+        }
 
     /**
      * Remove the specified institution.
      */
-    public function destroy(
-        Institution $institution
-    ): RedirectResponse {
+   public function destroy(Institution $institution): RedirectResponse
+    {
+        $this->authorize('delete', $institution);
 
         $this->institutionService->delete($institution);
 

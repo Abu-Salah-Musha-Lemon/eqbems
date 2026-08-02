@@ -24,6 +24,7 @@ class PermissionSeeder extends Seeder
 
             'institution.view',
             'institution.create',
+            'institution.restore',
             'institution.edit',
             'institution.delete',
         ];

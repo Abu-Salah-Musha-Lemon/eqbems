@@ -3,88 +3,55 @@
 namespace App\Services;
 
 use App\Models\Institution;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class InstitutionService
 {
-    /**
-     * Create a new institution.
-     */
-public function create(array $data): Institution
-{
-    return DB::transaction(function () use ($data) {
+    public function create(array $data): Institution
+    {
+        return DB::transaction(function () use ($data) {
 
-        if(isset($data['logo'])){
-
-            $data['logo'] = $data['logo']->store(
-                'institutions',
-                'public'
-            );
-
-        }
-
-        return Institution::create($data);
-
-    });
-}
-
-    /**
-     * Update an existing institution.
-     */
-public function update(
-    Institution $institution,
-    array $data
-): Institution {
-
-    return DB::transaction(function () use ($institution, $data) {
-
-        if (
-            isset($data['logo'])
-        ) {
-
-            if ($institution->logo) {
-
-                Storage::disk('public')
-                    ->delete($institution->logo);
-
+            if (isset($data['logo'])) {
+                $data['logo'] = $data['logo']->store('institutions', 'public');
             }
 
-            $data['logo'] = $data['logo']
-                ->store('institutions', 'public');
-        }
+            return Institution::create($data);
+        });
+    }
 
-        $institution->update($data);
+    public function update(Institution $institution, array $data): Institution
+    {
+        return DB::transaction(function () use ($institution, $data) {
 
-        return $institution->refresh();
+            if (isset($data['logo'])) {
 
-    });
-}
+                if ($institution->logo) {
+                    Storage::disk('public')->delete($institution->logo);
+                }
 
-    /**
-     * Soft delete an institution.
-     */
-public function delete(
-    Institution $institution
-): void {
+                $data['logo'] = $data['logo']->store('institutions', 'public');
+            }
 
-    $institution->delete();
+            $institution->update($data);
 
-}
+            return $institution->refresh();
+        });
+    }
 
-    /**
-     * Restore a soft-deleted institution.
-     */
+    public function delete(Institution $institution): void
+    {
+        $institution->delete();
+    }
+
     public function restore(int $id): Institution
     {
         $institution = Institution::withTrashed()->findOrFail($id);
-
         $institution->restore();
 
         return $institution;
     }
 
-    /**
-     * Toggle active/inactive status.
-     */
     public function toggleStatus(Institution $institution): Institution
     {
         $institution->status = ! $institution->status;
