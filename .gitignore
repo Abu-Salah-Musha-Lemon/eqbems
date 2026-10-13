@@ -27,4 +27,6 @@ Thumbs.db
 /node_modules
 /vendor
 /storage/logs/*
-/.zip
+# Local runtime database (create with the local setup guide)
+/database/database.sqlite
+/database/*.sqlite-journal

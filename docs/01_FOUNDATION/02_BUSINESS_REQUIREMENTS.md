@@ -1,358 +1,51 @@
----
-document_id: DOC-004
-document_name: Business Requirements Document (BRD)
-project_name: Enterprise Question Bank & Examination Management System
-project_short_name: EQBEMS
-version: 1.0.0
-status: Draft
-document_owner: Abu Salah Musha Lemon
-prepared_by: System Analysis & Architecture Team
-last_updated: 2026-08-02
+# Business Requirements Document (BRD)
 
-related_documents:
-  - PROJECT_MANIFEST.md
-  - 01_PROJECT_OVERVIEW.md
-  - PRODUCT_REQUIREMENTS.md
-  - FEATURE_CATALOG.md
----
+**Status:** Working baseline; stakeholders must validate the workflows before production implementation.
 
-# BUSINESS REQUIREMENTS DOCUMENT (BRD)
+## Business objective
 
-> Enterprise Question Bank & Examination Management System (EQBEMS)
+Create a controlled workflow for managing institution and academic reference data, question lifecycle, exam design/generation, and (in a later release) marks/results, with auditable decisions and scoped permissions.
 
----
+## Business requirements
 
-# 1. Purpose
+| ID | Requirement | Priority | Release target | Acceptance evidence |
+|---|---|---:|---|---|
+| BR-001 | Administrators can manage accounts and access rights | Must | Foundation | Positive and denied-access tests for user/role changes |
+| BR-002 | Authorized staff can create and maintain institution profiles | Must | Foundation | Institution CRUD tests, validation, authorization, soft-delete behavior |
+| BR-003 | Institution data access is scoped according to the approved tenancy model | Must | Foundation design gate | Written tenancy decision and cross-institution denial tests |
+| BR-004 | Academic units, subjects, chapters, and topics can be structured consistently | High | V1 | CRUD tests and foreign-key/integrity tests |
+| BR-005 | Questions can be classified and searched by taxonomy, difficulty, type, and status | High | V1 | Question-bank acceptance suite |
+| BR-006 | Question creation, review, revision, approval, and retirement are traceable | High | V1 | Workflow transition tests and actor/timestamp history |
+| BR-007 | Blueprints can express question counts/marks by approved classifications | High | V1 | Validation and feasibility tests for blueprint rules |
+| BR-008 | Exam generation selects eligible questions and records a reproducible immutable snapshot | High | V1/V2 gate | Re-generation/review tests; historic paper remains unchanged after question edits |
+| BR-009 | Answer keys are not returned by student-facing queries or exports | Critical | Before any candidate delivery | Explicit leakage tests across HTML/API/export/cache/log paths |
+| BR-010 | Authorized users can record marks and calculate results using approved grading rules | High | V2 | Decimal precision, calculation, override/audit tests |
+| BR-011 | Results can be reviewed and published under a controlled workflow | High | V2 | State-transition and visibility tests |
+| BR-012 | Sensitive business actions are recorded in audit logs | High | Before production | Log completeness and access tests |
+| BR-013 | Operations staff can back up and restore the application and database | Must | Before production | Documented restore drill with measured result |
 
-This document defines the business needs, operational requirements, workflows, business rules, stakeholders, and expected outcomes of the EQBEMS project.
+## Core workflows (target)
 
-The purpose of this document is to ensure that the software solves real business problems rather than only implementing technical features.
+### Question lifecycle
 
----
+Draft → Submitted for review → Approved or returned for changes → Revised/versioned → Retired. Only approved, active versions should be eligible for exam generation. The project must define whether reviewers may approve their own questions; the recommended default is no.
 
-# 2. Business Background
+### Exam preparation
 
-Many educational institutions continue to manage examination-related activities using paper documents, spreadsheets, email communication, and isolated software tools.
+Exam controller selects an academic context, creates a blueprint, validates whether the question bank can satisfy it, generates a draft, reviews the selected question snapshot, approves the paper, and controls access. Generation must not mutate question-bank content.
 
-These fragmented processes lead to:
+### Result lifecycle (later release)
 
-- Data inconsistency
-- Duplicate work
-- Security risks
-- Delayed decision making
-- Manual reporting
-- Poor traceability
-- Limited accountability
+Candidate list locked → marks entered → validation/review → approved → published → corrected only through a controlled, audited amendment process.
 
-EQBEMS is intended to replace these disconnected processes with a centralized digital platform.
+## Business rules to decide with stakeholders
 
----
+- Whether one deployment contains multiple organizations, multiple institutions, or both.
+- Whether institution codes are globally unique or unique within an organization.
+- Whether question content may be shared across institutions.
+- Which roles can create, review, approve, generate, print, and publish an exam.
+- How question reuse, randomization, variants, negative marking, rounding, absent candidates, and result correction work.
+- Retention period for questions, exams, candidate responses, results, and audit records.
+- Whether candidate delivery is in scope for the first production release.
 
-# 3. Business Objectives
-
-The primary business objectives are:
-
-- Centralize examination management.
-- Standardize academic workflows.
-- Improve question security.
-- Reduce administrative effort.
-- Improve transparency.
-- Improve reporting accuracy.
-- Reduce processing time.
-- Increase operational efficiency.
-- Improve accountability.
-
----
-
-# 4. Business Scope
-
-The system shall support:
-
-- Institution management
-- Academic structure management
-- User management
-- Question bank management
-- Blueprint management
-- Examination management
-- Result processing
-- Administrative reporting
-
----
-
-# 5. Stakeholders
-
-## Internal Stakeholders
-
-- Super Administrator
-- Institution Administrator
-- Academic Administrator
-- Faculty Administrator
-- Department Administrator
-- Teachers
-- Question Setters
-- Moderators
-- Examination Committee
-
-## External Stakeholders
-
-- Students
-- Educational Institutions
-- Regulatory Bodies
-- Software Support Team
-
----
-
-# 6. Business Processes
-
-The primary business processes include:
-
-1. Institution Registration
-2. Academic Structure Setup
-3. User Registration
-4. Role Assignment
-5. Question Creation
-6. Question Review
-7. Question Approval
-8. Blueprint Preparation
-9. Examination Planning
-10. Question Paper Generation
-11. Result Processing
-12. Report Generation
-
----
-
-# 7. High-Level Business Workflow
-
-Institution Setup
-
-↓
-
-Academic Configuration
-
-↓
-
-User Management
-
-↓
-
-Question Bank Management
-
-↓
-
-Question Approval
-
-↓
-
-Blueprint Preparation
-
-↓
-
-Examination
-
-↓
-
-Result Processing
-
-↓
-
-Reports
-
----
-
-# 8. User Roles
-
-| Role | Responsibility |
-|------|----------------|
-| Super Admin | System configuration and overall control |
-| Institution Admin | Institution management |
-| Academic Admin | Academic structure management |
-| Teacher | Create and manage academic content |
-| Question Setter | Prepare questions |
-| Moderator | Review and approve questions |
-| Exam Committee | Prepare examinations |
-| Student | View published results |
-
----
-
-# 9. Business Rules
-
-### BR-001
-
-Every institution shall have a unique institution code.
-
-### BR-002
-
-Every department must belong to a faculty.
-
-### BR-003
-
-Every subject must belong to a department.
-
-### BR-004
-
-Only authorized users may create questions.
-
-### BR-005
-
-Questions cannot be published without approval.
-
-### BR-006
-
-Deleted academic records shall not permanently remove historical examination data.
-
-### BR-007
-
-Every important business activity shall be recorded in the audit log.
-
-### BR-008
-
-Users shall only access data permitted by their assigned roles.
-
----
-
-# 10. Functional Business Requirements
-
-The system shall provide:
-
-- Institution Management
-- Academic Management
-- User Management
-- Question Bank
-- Question Approval
-- Blueprint Management
-- Examination Management
-- Result Processing
-- Reporting
-- Activity Logging
-
-Detailed functional specifications are maintained in the Feature Catalog.
-
----
-
-# 11. Non-Functional Business Requirements
-
-The system shall provide:
-
-## Security
-
-- Role-based access
-- Secure authentication
-- Audit trail
-- Data protection
-
-## Performance
-
-- Fast response time
-- Optimized search
-- Efficient reporting
-
-## Reliability
-
-- Stable operation
-- Data integrity
-- Error handling
-
-## Availability
-
-- High uptime
-- Backup support
-- Disaster recovery planning
-
----
-
-# 12. Business Constraints
-
-Current constraints include:
-
-- Limited development resources
-- Incremental implementation
-- Community edition as first release
-- Limited initial budget
-
----
-
-# 13. Business Assumptions
-
-The project assumes:
-
-- Institutions are willing to adopt digital workflows.
-- Users will receive adequate training.
-- Internet connectivity is available.
-- Required infrastructure exists.
-
----
-
-# 14. Risks
-
-Potential business risks include:
-
-- User resistance to change
-- Incorrect data migration
-- Poor user training
-- Requirement changes
-- Delayed implementation
-
-Risk mitigation strategies will be documented separately.
-
----
-
-# 15. Business Success Criteria
-
-The project will be considered successful if:
-
-- Manual processes are minimized.
-- Question management becomes centralized.
-- Examination preparation time is reduced.
-- Reports are generated automatically.
-- Administrative workload decreases.
-- Security incidents are reduced.
-
----
-
-# 16. Key Performance Indicators (KPIs)
-
-Examples:
-
-- Average exam preparation time
-- Number of approved questions
-- Number of active institutions
-- Number of active users
-- Report generation time
-- User satisfaction rate
-
----
-
-# 17. Traceability
-
-Every business requirement shall map to:
-
-- Product Requirement
-- Feature ID
-- Module
-- System Requirement
-- Test Case
-
-This ensures complete requirement traceability throughout the project lifecycle.
-
----
-
-# 18. Related Documents
-
-- PROJECT_MANIFEST.md
-- PROJECT_OVERVIEW.md
-- PRODUCT_REQUIREMENTS.md
-- FEATURE_CATALOG.md
-- SYSTEM_ARCHITECTURE.md
-- DATABASE_DESIGN.md
-
----
-
-# 19. Approval
-
-Document Status: Draft
-
-Approval Status: Pending
-
-Baseline Version: 1.0
-
-This document becomes the official Business Baseline after approval.
+No schema should be finalized for these unresolved rules without a documented decision.
