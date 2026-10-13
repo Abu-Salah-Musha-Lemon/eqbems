@@ -30,5 +30,5 @@ Thumbs.db
 # Local runtime database (create with the local setup guide)
 /database/database.sqlite
 /database/*.sqlite-journal
-/.png,jpeg, 
+/.png, .jpg 
 /.zip

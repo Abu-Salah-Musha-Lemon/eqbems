@@ -2,64 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dashboard;
-use Illuminate\Http\Request;
+use App\Models\Institution;
+use App\Models\User;
+use Illuminate\Support\Facades\Schema;
 
 class DashboardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('dashboard.index');
-    }
+        $userCount = User::query()->count();
+        $newUsersThisMonth = User::query()->where('created_at', '>=', now()->startOfMonth())->count();
+        $institutionCount = Institution::query()->count();
+        $activeInstitutions = Institution::query()->where('status', true)->count();
+        $inactiveInstitutions = max(0, $institutionCount - $activeInstitutions);
+        $recentUsers = User::query()->latest()->limit(6)->get(['id', 'name', 'email', 'created_at']);
+        $recentInstitutions = Institution::query()->latest()->limit(5)->get(['id', 'uuid', 'code', 'name', 'email', 'status', 'created_at']);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        // Academic/examination modules are not yet present in the current migrations.
+        $moduleCounts = [
+            'questions' => Schema::hasTable('questions') ? \DB::table('questions')->count() : null,
+            'exams' => Schema::hasTable('exams') ? \DB::table('exams')->count() : null,
+            'results' => Schema::hasTable('results') ? \DB::table('results')->count() : null,
+        ];
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $monthlyUsers = collect(range(5, 0))->map(function ($monthsAgo) {
+            $date = now()->startOfMonth()->subMonths($monthsAgo);
+            return [
+                'label' => $date->format('M'),
+                'count' => User::query()->whereBetween('created_at', [$date, $date->copy()->endOfMonth()])->count(),
+            ];
+        });
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Dashboard $dashboard)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Dashboard $dashboard)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Dashboard $dashboard)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Dashboard $dashboard)
-    {
-        //
+        return view('dashboard.index', compact(
+            'userCount', 'newUsersThisMonth', 'institutionCount', 'activeInstitutions',
+            'inactiveInstitutions', 'recentUsers', 'recentInstitutions', 'moduleCounts', 'monthlyUsers'
+        ));
     }
 }

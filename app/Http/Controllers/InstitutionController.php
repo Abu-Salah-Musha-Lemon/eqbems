@@ -14,18 +14,19 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class InstitutionController extends Controller
 {
     use AuthorizesRequests;
-    // public function __construct(
-    //     private readonly InstitutionService $institutionService
-    // ) {}
+    public function __construct(
+        private readonly InstitutionService $institutionService
+    ) {}
 
     /**
      * Display a listing of institutions.
      */
     public function index(): View
     {
-        $this->authorize('viewAny', Institution::class);
+    //    $this->authorize('viewAny', Institution::class);
 
-        $institutions = $this->institutionService->paginate();
+        $institutions = $this->institutionService->paginate(10);
+        // $institutions = $this->institutionService;
 
         return view(
             'institutions.index',

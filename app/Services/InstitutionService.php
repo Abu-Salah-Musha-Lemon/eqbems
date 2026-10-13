@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\Storage;
 
 class InstitutionService
 {
+    public function paginate(int $perPage = 10)
+    {
+        return Institution::query()
+            ->latest()
+            ->paginate($perPage);
+    }
+    
     public function create(array $data): Institution
     {
         return DB::transaction(function () use ($data) {

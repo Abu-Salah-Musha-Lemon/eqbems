@@ -22,6 +22,7 @@ class PermissionSeeder extends Seeder
             'user.edit',
             'user.delete',
 
+            'institution.index',
             'institution.view',
             'institution.create',
             'institution.restore',

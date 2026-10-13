@@ -1,0 +1,3 @@
+@extends('layouts.admin')
+@section('title','Add user')
+@section('content')<div class="mb-4"><div class="eyebrow">System / Users</div><h1 class="page-title">Add user</h1><p class="muted mb-0">Create a new EQBEMS account.</p></div><form method="POST" action="{{ route('users.store') }}">@csrf<div class="card-pro p-4 p-lg-5"><h2 class="section-title mb-4">Account details</h2>@include('users._form')<div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top"><a href="{{ route('users.index') }}" class="btn btn-light">Cancel</a><button class="btn btn-primary">Create user</button></div></div></form>@endsection

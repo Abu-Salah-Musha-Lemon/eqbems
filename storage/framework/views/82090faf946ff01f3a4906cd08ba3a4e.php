@@ -1,0 +1,7 @@
+<?php $__env->startSection('title','Add institution'); ?>
+<?php $__env->startSection('content'); ?>
+<div class="mb-4"><div class="eyebrow">Directory / Institutions</div><h1 class="page-title">Add institution</h1><p class="muted mb-0">Create a new school or organization record.</p></div>
+<form method="POST" action="<?php echo e(route('institutions.store')); ?>" enctype="multipart/form-data"><?php echo csrf_field(); ?><div class="card-pro p-4 p-lg-5"><div class="mb-4"><h2 class="section-title">Institution details</h2><div class="section-sub">Fields marked with * are required.</div></div><?php echo $__env->make('institutions._partials.form', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><div class="d-flex flex-wrap gap-2 justify-content-end mt-4 pt-3 border-top"><a href="<?php echo e(route('institutions.index')); ?>" class="btn btn-light px-4">Cancel</a><button type="submit" class="btn btn-primary px-4"><i class="bi bi-check2 me-2"></i>Create institution</button></div></div></form>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\srleo\Documents\eqbems\resources\views/institutions/create.blade.php ENDPATH**/ ?>
