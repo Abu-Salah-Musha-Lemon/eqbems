@@ -32,3 +32,4 @@ Thumbs.db
 /database/*.sqlite-journal
 /.png, .jpg 
 /.zip
+/storage/framework/views/*
