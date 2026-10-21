@@ -6,11 +6,9 @@
         <div class="eyebrow">Directory / Organizations</div>
         <h1 class="page-title">Institutions</h1>
         <p class="muted mb-0">Manage registered schools and education organizations.</p>
-    </div>
-        <a href="{{ route('institutions.create') }}" class="btn btn-primary"><i class="bi bi-plus-lg me-2"></i>Add
-        institution</a>
-        <a href="{{ route('institutions.trash') }}" class="btn btn-secondary"><i class="bi bi-plus-lg me-2"></i>View Trash </a>
-    </div>
+    </div>@can('institution.restore')<a href="{{ route('institutions.trashed') }}" class="btn btn-light">View archived</a>@endcan @can('institution.create')<a href="{{ route('institutions.create') }}" class="btn btn-primary"><i class="bi bi-plus-lg me-2"></i>Add
+        institution</a>@endcan
+</div>
 <div class="row g-3 mb-3">
     <div class="col-6 col-lg-3">
         <div class="card-pro p-3">
@@ -73,20 +71,20 @@
                     <td class="text-nowrap">{{ $institution->created_at?->format('d M Y') ?? '—' }}</td>
                     <td>
                         <div class="d-flex gap-1"><a href="{{ route('institutions.show',$institution) }}"
-                                class="icon-btn" title="View"><i class="bi bi-eye"></i></a><a
+                                class="icon-btn" title="View"><i class="bi bi-eye"></i></a>@can('update', $institution)<a
                                 href="{{ route('institutions.edit',$institution) }}" class="icon-btn" title="Edit"><i
                                     class="bi bi-pencil"></i></a>
-                            <form method="POST" action="{{ route('institutions.destroy',$institution) }}">@csrf
+                            @endcan @can('delete', $institution)<form method="POST" action="{{ route('institutions.destroy',$institution) }}">@csrf
                                 @method('DELETE')<button type="submit" class="icon-btn text-danger" title="Delete"
                                     data-confirm="This institution will be moved to the trash."><i
-                                        class="bi bi-trash3"></i></button></form>
+                                        class="bi bi-trash3"></i></button></form>@endcan
                         </div>
                     </td>
                 </tr>@empty<tr>
                     <td colspan="7" class="text-center py-5"><i
                             class="bi bi-buildings fs-2 d-block muted mb-2"></i><strong>No institutions found</strong>
-                        <p class="muted mb-3 mt-1">Create your first institution to populate this directory.</p><a
-                            class="btn btn-primary btn-sm" href="{{ route('institutions.create') }}">Add institution</a>
+                        <p class="muted mb-3 mt-1">Create your first institution to populate this directory.</p>@can('institution.create')<a
+                            class="btn btn-primary btn-sm" href="{{ route('institutions.create') }}">Add institution</a>@endcan
                     </td>
                 </tr>@endforelse
             </tbody>

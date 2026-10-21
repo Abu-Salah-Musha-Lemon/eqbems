@@ -89,7 +89,7 @@
 
                     <ul class="profile-dropdown onhover-show-div">
                         <li>
-                            <a href="{{ route('profile') }}">
+                            <a href="{{ route('profile.edit') }}">
                                 <i data-feather="user"></i>
                                 Profile
                             </a>

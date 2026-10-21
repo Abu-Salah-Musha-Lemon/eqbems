@@ -2,36 +2,23 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::updateOrCreate(
-            ['email' => 'test@example.com'],
-            [
-                'name' => 'Test User',
-                'password' => Hash::make('password'),
-                'email_verified_at' => now(),
-            ]
-        );
         $this->call([
-        RoleSeeder::class,
-        PermissionSeeder::class,
-        RolePermissionSeeder::class,
-        AdminUserSeeder::class,
+            RoleSeeder::class,
+            PermissionSeeder::class,
+            RolePermissionSeeder::class,
+            AdminUserSeeder::class,
         ]);
 
+        // Demo content only runs with APP_ENV=local; production and tests are untouched.
+        // QuestionSeeder also calls SubjectSeeder to ensure its dependencies exist.
+        if (app()->environment('local')) {
+            $this->call(QuestionSeeder::class);
+        }
     }
 }

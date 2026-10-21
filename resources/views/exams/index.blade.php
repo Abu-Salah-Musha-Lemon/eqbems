@@ -1,0 +1,6 @@
+@extends('layouts.admin')
+@section('title','Examinations')
+@section('content')
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4"><div><div class="eyebrow">Examinations / Papers</div><h1 class="page-title">Generated exams</h1><p class="muted">Immutable question snapshots, ready for review and issue.</p></div>@can('blueprint.view')<a href="{{ route('blueprints.index') }}" class="btn btn-primary">View blueprints</a>@endcan</div>
+<div class="card-pro table-card"><table class="table"><thead><tr><th>Exam</th><th>Subject</th><th>Total marks</th><th>Duration</th><th>Status</th><th>Created</th></tr></thead><tbody>@forelse($exams as $exam)<tr><td><a href="{{ route('exams.show',$exam) }}">{{ $exam->title }} #{{ $exam->id }}</a></td><td>{{ $exam->subject->name }}</td><td>{{ $exam->total_marks }}</td><td>{{ $exam->duration_minutes }} minutes</td><td><span class="badge {{ $exam->status === 'issued' ? 'text-bg-success' : 'text-bg-warning' }}">{{ ucfirst($exam->status) }}</span></td><td>{{ $exam->created_at->format('d M Y') }}</td></tr>@empty<tr><td colspan="6" class="text-center muted py-4">No generated exams.</td></tr>@endforelse</tbody></table>{{ $exams->links() }}</div>
+@endsection

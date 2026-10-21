@@ -1,0 +1,6 @@
+@extends('layouts.admin')
+@section('title','Results')
+@section('content')
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4"><div><div class="eyebrow">Examinations / Grading</div><h1 class="page-title">Results</h1><p class="muted">{{ auth()->user()->can('result.view') ? 'Marking and publication management.' : 'Your published examination results.' }}</p></div>@can('result.mark')<a class="btn btn-primary" href="{{ route('results.create') }}">+ Enter marks</a>@endcan</div>
+<div class="card-pro table-card"><table class="table"><thead><tr><th>Student</th><th>Exam</th><th>Score</th><th>Grade</th><th>Status</th><th>Details</th></tr></thead><tbody>@forelse($results as $result)<tr><td>{{ $result->student?->name ?? auth()->user()->name }}</td><td>{{ $result->exam->title }}</td><td>{{ $result->score }} / {{ $result->exam->total_marks }}</td><td><strong>{{ $result->grade }}</strong></td><td>{{ ucfirst($result->status) }}</td><td><a href="{{ route('results.show',$result) }}" class="btn btn-sm btn-light">Open</a></td></tr>@empty<tr><td colspan="6" class="text-center muted py-4">No results available.</td></tr>@endforelse</tbody></table>{{ $results->links() }}</div>
+@endsection

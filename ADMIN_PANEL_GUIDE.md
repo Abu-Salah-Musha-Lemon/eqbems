@@ -1,25 +1,13 @@
-# EQBEMS Admin Panel
+# EQBEMS Admin Interface
 
-This update adds a responsive Laravel Blade admin console using Bootstrap 5, Bootstrap Icons, DataTables, Toastr, SweetAlert2, and Chart.js.
+The updated admin panel includes authenticated screens for Institutions, Subjects/Topics, Academic Years, Question Bank, Blueprints, Examinations, Results and Super Admin-only Users. Navigation links hide actions that the current role does not have permission to use; server-side controllers independently enforce those permissions and institution scope.
 
-## Included
-- Admin dashboard with live user/institution counts and registration chart.
-- Institution directory, searchable table, create/edit/view pages, status display, and confirmed delete action.
-- User management CRUD pages (routes remain protected by the existing `role:Super Admin` middleware).
-- Responsive navigation, account/profile shortcut, logout, validation feedback, toast notifications, and reusable confirmation dialogs.
-- Honest placeholders for question bank, examinations, and results when their schema/modules are not present yet.
+## Getting started
 
-## Install / run
-1. Extract the project and open the project directory.
-2. Run `composer install` if dependencies are not installed.
-3. Copy `.env.example` to `.env` if needed, configure the database, and run `php artisan key:generate` if the app key is missing.
-4. Run `php artisan migrate`.
-5. Ensure the signed-in admin has the Spatie role `Super Admin` for user management, and the appropriate `institution.view`, `institution.create`, `institution.update`, and `institution.delete` permissions for institution actions.
-6. Run `php artisan optimize:clear` and `php artisan serve`.
+See [README.md](README.md) for complete Windows/Linux setup, initial admin account seeding (no default password), and a walkthrough from creating a subject to publishing a student's exam result.
 
-The admin template loads Bootstrap/DataTables/Toastr/SweetAlert2/Chart.js from public CDNs, so an internet connection is required unless these assets are downloaded and self-hosted.
+The UI uses Bootstrap 5, Bootstrap Icons and optional CDN-hosted DataTables, Toastr and SweetAlert. Connectivity to those CDNs is required for all optional enhancements, although ordinary forms and server-side validation do not depend on JavaScript. Uploads use Laravel's `public` storage disk and require `php artisan storage:link`.
 
-## Notes
-- The existing project migrations currently implement users, permissions, and institutions. Question bank, exams, and results are shown as planned modules and are not represented by fake database data.
-- Authorization is intentionally not bypassed. If institution pages return 403, assign the required permissions through your existing role/permission setup.
-- Test all write actions against a development database before production deployment.
+## Caveats
+
+The original documentation described the question bank, exams and results as “coming soon”; this has changed in the included MVP code. Full Laravel tests and browser smoke tests are still required on a machine with dependencies installed. Do not deploy real candidate data without security review and backup/restore procedures.

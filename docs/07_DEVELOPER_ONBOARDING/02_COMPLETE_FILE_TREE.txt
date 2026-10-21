@@ -1,0 +1,701 @@
+EQBEMS/  (reviewed source; directory inventory before these new developer docs)
+├── .github/
+│   └── workflows/
+│       └── quality.yml
+├── app/
+│   ├── Actions/
+│   │   └── Institution/
+│   │       ├── CreateInstitutionAction.php  [EMPTY PLACEHOLDER]
+│   │       ├── DeleteInstitutionAction.php  [EMPTY PLACEHOLDER]
+│   │       └── UpdateInstitutionAction.php  [EMPTY PLACEHOLDER]
+│   ├── DTO/
+│   │   ├── InstitutionData.php  [EMPTY PLACEHOLDER]
+│   │   └── QuestionData.php  [EMPTY PLACEHOLDER]
+│   ├── Helpers/
+│   │   └── helpers.php
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Auth/
+│   │   │   │   ├── AuthenticatedSessionController.php
+│   │   │   │   ├── ConfirmablePasswordController.php
+│   │   │   │   ├── EmailVerificationNotificationController.php
+│   │   │   │   ├── EmailVerificationPromptController.php
+│   │   │   │   ├── NewPasswordController.php
+│   │   │   │   ├── PasswordController.php
+│   │   │   │   ├── PasswordResetLinkController.php
+│   │   │   │   ├── RegisteredUserController.php
+│   │   │   │   └── VerifyEmailController.php
+│   │   │   ├── AcademicYearController.php
+│   │   │   ├── BlueprintController.php
+│   │   │   ├── BlueprintQuestionController.php
+│   │   │   ├── Controller.php
+│   │   │   ├── DashboardController.php
+│   │   │   ├── ExamController.php
+│   │   │   ├── InstitutionController.php
+│   │   │   ├── OnlineExamController.php
+│   │   │   ├── ProfileController.php
+│   │   │   ├── QuestionController.php
+│   │   │   ├── QuestionReviewController.php
+│   │   │   ├── ResultController.php
+│   │   │   ├── SubjectController.php
+│   │   │   ├── TopicController.php
+│   │   │   └── UserController.php
+│   │   └── Requests/
+│   │       ├── Auth/
+│   │       │   └── LoginRequest.php
+│   │       ├── Institution/
+│   │       │   ├── StoreInstitutionRequest.php
+│   │       │   └── UpdateInstitutionRequest.php
+│   │       ├── ProfileUpdateRequest.php
+│   │       ├── StoreInstitutionRequest.php  [EMPTY PLACEHOLDER]
+│   │       └── UpdateInstitutionRequest.php  [EMPTY PLACEHOLDER]
+│   ├── Models/
+│   │   ├── AcademicYear.php
+│   │   ├── Blueprint.php
+│   │   ├── Dashboard.php
+│   │   ├── Exam.php
+│   │   ├── ExamQuestion.php
+│   │   ├── Institution.php
+│   │   ├── OnlineExamAnswer.php
+│   │   ├── OnlineExamAttempt.php
+│   │   ├── Question.php
+│   │   ├── QuestionVersion.php
+│   │   ├── Result.php
+│   │   ├── ResultRevision.php
+│   │   ├── Subject.php
+│   │   ├── Topic.php
+│   │   └── User.php
+│   ├── Policies/
+│   │   ├── InstitutionPolicy.php
+│   │   └── QuestionPolicy.php  [EMPTY PLACEHOLDER]
+│   ├── Providers/
+│   │   └── AppServiceProvider.php
+│   ├── Services/
+│   │   ├── BlueprintPoolService.php
+│   │   ├── ExamGenerationService.php
+│   │   ├── GradeService.php
+│   │   ├── InstitutionService.php
+│   │   ├── QuestionService.php
+│   │   └── UserService.php  [EMPTY PLACEHOLDER]
+│   ├── Support/
+│   │   └── AccessScope.php
+│   └── View/
+│       └── Components/
+│           ├── AppLayout.php
+│           └── GuestLayout.php
+├── bootstrap/
+│   ├── cache/
+│   │   ├── .gitignore
+│   │   ├── packages.php
+│   │   └── services.php
+│   ├── app.php
+│   └── providers.php
+├── config/
+│   ├── app.php
+│   ├── auth.php
+│   ├── cache.php
+│   ├── database.php
+│   ├── features.php
+│   ├── filesystems.php
+│   ├── logging.php
+│   ├── mail.php
+│   ├── permission.php
+│   ├── queue.php
+│   ├── services.php
+│   ├── session.php
+│   ├── settings.php  [EMPTY PLACEHOLDER]
+│   └── view.php
+├── database/
+│   ├── factories/
+│   │   ├── InstitutionFactory.php
+│   │   ├── QuestionFactory.php
+│   │   ├── QuestionVersionFactory.php
+│   │   ├── SubjectFactory.php
+│   │   ├── TopicFactory.php
+│   │   └── UserFactory.php
+│   ├── migrations/
+│   │   ├── 0001_01_01_000000_create_users_table.php
+│   │   ├── 0001_01_01_000001_create_cache_table.php
+│   │   ├── 0001_01_01_000002_create_jobs_table.php
+│   │   ├── 2026_07_04_190837_create_permission_tables.php
+│   │   ├── 2026_07_05_142437_create_institutions_table.php
+│   │   ├── 2026_10_20_000001_create_academic_and_exam_tables.php
+│   │   ├── 2026_10_20_000002_create_online_exam_and_paper_format_tables.php
+│   │   └── 2026_10_20_000003_create_blueprint_questions_table.php
+│   ├── seeders/
+│   │   ├── AdminUserSeeder.php
+│   │   ├── BoardFormatDemoSeeder.php
+│   │   ├── DatabaseSeeder.php
+│   │   ├── PermissionSeeder.php
+│   │   ├── QuestionSeeder.php
+│   │   ├── ReviewWorkflowDemoSeeder.php
+│   │   ├── RolePermissionSeeder.php
+│   │   ├── RoleSeeder.php
+│   │   └── SubjectSeeder.php
+│   └── .gitignore
+├── docs/
+│   ├── 01_FOUNDATION/
+│   │   ├── 01_PROJECT_OVERVIEW.md
+│   │   ├── 02_BUSINESS_REQUIREMENTS.md
+│   │   ├── ARCHITECTURE_DECISION_RECORDS.md
+│   │   ├── ASSUMPTIONS_AND_CONSTRAINTS.md
+│   │   ├── FEATURE_CATALOG.md
+│   │   ├── GLOSSARY.md
+│   │   ├── IMPLEMENTATION_BACKLOG.md
+│   │   ├── PRODUCT_REQUIREMENTS.md
+│   │   ├── PROJECT_SCOPE.md
+│   │   ├── PROJECT_STANDARDS.md
+│   │   ├── RISK_REGISTER.md
+│   │   ├── ROADMAP.md
+│   │   ├── STAKEHOLDERS.md
+│   │   └── VISION_AND_OBJECTIVES.md
+│   ├── 02_ARCHITECTURE/
+│   │   ├── ADR-001-use-laravel-12.md
+│   │   ├── ADR-002-modular-monolith.md
+│   │   ├── ADR-003-use-bootstrap-5.md
+│   │   ├── ADR-004-use-mysql.md
+│   │   ├── ADR-005-use-spatie-permission.md
+│   │   ├── ADR-006-service-layer.md
+│   │   ├── ADR-007-form-request-validation.md
+│   │   ├── ARCHITECTURE_DECISION_RECORDS.md
+│   │   ├── FOLDER_STRUCTURE.md
+│   │   ├── MODULE_DEPENDENCY_MAP.md
+│   │   ├── SECURITY_ARCHITECTURE.md
+│   │   └── SYSTEM_ARCHITECTURE.md
+│   ├── 03_DATABASE/
+│   │   ├── DATABASE_DESIGN.md
+│   │   ├── DATABASE_DICTIONARY.md
+│   │   ├── ERD.md
+│   │   └── MIGRATION_PLAN.md
+│   ├── 04_DEVELOPMENT/
+│   │   ├── CODING_GUIDELINES.md
+│   │   ├── DEVELOPMENT_WORKFLOW.md
+│   │   ├── LOCAL_SETUP.md
+│   │   └── TESTING.md
+│   ├── 05_OPERATIONS/
+│   │   ├── BACKUP_AND_RECOVERY.md
+│   │   ├── DEPLOYMENT.md
+│   │   └── OBSERVABILITY.md
+│   ├── 06_MODULE_SPECS/
+│   │   ├── ACADEMIC_MODULE.md
+│   │   ├── AUTH_AND_RBAC.md
+│   │   ├── EXAMINATION_MODULE.md
+│   │   ├── INSTITUTION_MODULE.md
+│   │   ├── QUESTION_BANK_MODULE.md
+│   │   └── RESULTS_MODULE.md
+│   ├── 00_START_HERE.md
+│   ├── BLUEPRINT_QUESTION_WORKFLOW.md
+│   ├── BLUEPRINT_REPAIR_GUIDE.md
+│   ├── EXAM_PAPER_TEMPLATES.md
+│   └── README.md
+├── public/
+│   ├── css/
+│   │   ├── animate.css
+│   │   ├── aos.css
+│   │   ├── bootstrap.css
+│   │   ├── button-builder.css
+│   │   ├── calendar.css
+│   │   ├── chartist.css
+│   │   ├── color-1.css
+│   │   ├── datatable-extension.css
+│   │   ├── datatables.css
+│   │   ├── date-picker.css
+│   │   ├── daterange-picker.css
+│   │   ├── dropzone.css
+│   │   ├── feather-icon.css
+│   │   ├── flag-icon.css
+│   │   ├── fontawesome.css
+│   │   ├── icofont.css
+│   │   ├── image-cropper.css
+│   │   ├── jkanban.css
+│   │   ├── jsgrid.css
+│   │   ├── mapsjs-ui.css
+│   │   ├── owlcarousel.css
+│   │   ├── page-builder.css
+│   │   ├── photoswipe.css
+│   │   ├── prism.css
+│   │   ├── range-slider.css
+│   │   ├── rating.css
+│   │   ├── responsive.css
+│   │   ├── scrollable.css
+│   │   ├── select2.css
+│   │   ├── simple-mde.css
+│   │   ├── slick-theme.css
+│   │   ├── slick.css
+│   │   ├── sticky.css
+│   │   ├── style.css
+│   │   ├── summernote.css
+│   │   ├── sweetalert2.css
+│   │   ├── themify.css
+│   │   ├── timepicker.css
+│   │   ├── todo.css
+│   │   ├── tour.css
+│   │   ├── tree.css
+│   │   ├── vector-map.css
+│   │   └── whether-icon.css
+│   ├── js/
+│   │   ├── animation/
+│   │   │   ├── aos/
+│   │   │   │   ├── aos-init.js
+│   │   │   │   └── aos.js
+│   │   │   ├── scroll-reveal/
+│   │   │   │   ├── reveal-custom.js
+│   │   │   │   └── scrollreveal.min.js
+│   │   │   ├── tilt/
+│   │   │   │   ├── tilt-custom.js
+│   │   │   │   └── tilt.jquery.js
+│   │   │   ├── wow/
+│   │   │   │   ├── wow-init.js
+│   │   │   │   └── wow.min.js
+│   │   │   └── animate-custom.js
+│   │   ├── bookmark/
+│   │   │   ├── custom.js
+│   │   │   └── jquery.validate.min.js
+│   │   ├── bootstrap/
+│   │   │   ├── bootstrap.min.js
+│   │   │   └── popper.min.js
+│   │   ├── button-builder/
+│   │   │   ├── clipboard.min.js
+│   │   │   ├── colorpicker.js
+│   │   │   ├── extend-1.0.js
+│   │   │   └── generator.js
+│   │   ├── calendar/
+│   │   │   ├── app.js
+│   │   │   ├── calendars.js
+│   │   │   ├── chance.min.js
+│   │   │   ├── moment.min.js
+│   │   │   ├── schedules.js
+│   │   │   ├── tui-calendar.js
+│   │   │   ├── tui-code-snippet.min.js
+│   │   │   ├── tui-date-picker.min.js
+│   │   │   └── tui-time-picker.min.js
+│   │   ├── chart/
+│   │   │   ├── apex-chart/
+│   │   │   │   ├── apex-chart.js
+│   │   │   │   ├── chart-custom.js
+│   │   │   │   ├── moment.min.js
+│   │   │   │   └── stock-prices.js
+│   │   │   ├── chartist/
+│   │   │   │   ├── chartist-custom.js
+│   │   │   │   ├── chartist-plugin-tooltip.js
+│   │   │   │   └── chartist.js
+│   │   │   ├── chartjs/
+│   │   │   │   ├── chart.custom.js
+│   │   │   │   └── chart.min.js
+│   │   │   ├── flot-chart/
+│   │   │   │   ├── excanvas.js
+│   │   │   │   ├── flot-script.js
+│   │   │   │   ├── jquery.flot.categories.js
+│   │   │   │   ├── jquery.flot.js
+│   │   │   │   ├── jquery.flot.pie.js
+│   │   │   │   ├── jquery.flot.stack.js
+│   │   │   │   ├── jquery.flot.symbol.js
+│   │   │   │   └── jquery.flot.time.js
+│   │   │   ├── google/
+│   │   │   │   ├── google-chart-loader.js
+│   │   │   │   └── google-chart.js
+│   │   │   ├── knob/
+│   │   │   │   ├── knob-chart.js
+│   │   │   │   └── knob.min.js
+│   │   │   ├── morris-chart/
+│   │   │   │   ├── morris-script.js
+│   │   │   │   ├── morris.js
+│   │   │   │   ├── morris.min.js
+│   │   │   │   ├── prettify.min.js
+│   │   │   │   └── raphael.js
+│   │   │   ├── peity-chart/
+│   │   │   │   ├── peity-custom.js
+│   │   │   │   └── peity.jquery.js
+│   │   │   └── sparkline/
+│   │   │       ├── sparkline-script.js
+│   │   │       └── sparkline.js
+│   │   ├── clipboard/
+│   │   │   ├── clipboard-script.js
+│   │   │   └── clipboard.min.js
+│   │   ├── contacts/
+│   │   │   └── custom.js
+│   │   ├── counter/
+│   │   │   ├── counter-custom.js
+│   │   │   ├── jquery.counterup.min.js
+│   │   │   └── jquery.waypoints.min.js
+│   │   ├── custom-card/
+│   │   │   └── custom-card.js
+│   │   ├── dashboard/
+│   │   │   ├── dashboard_2.js
+│   │   │   └── default.js
+│   │   ├── datatable/
+│   │   │   ├── datatable-extension/
+│   │   │   │   ├── buttons.bootstrap4.min.js
+│   │   │   │   ├── buttons.colVis.min.js
+│   │   │   │   ├── buttons.html5.min.js
+│   │   │   │   ├── buttons.print.min.js
+│   │   │   │   ├── custom.js
+│   │   │   │   ├── dataTables.autoFill.min.js
+│   │   │   │   ├── dataTables.bootstrap4.min.js
+│   │   │   │   ├── dataTables.buttons.min.js
+│   │   │   │   ├── dataTables.colReorder.min.js
+│   │   │   │   ├── dataTables.fixedHeader.min.js
+│   │   │   │   ├── dataTables.keyTable.min.js
+│   │   │   │   ├── dataTables.responsive.min.js
+│   │   │   │   ├── dataTables.rowReorder.min.js
+│   │   │   │   ├── dataTables.scroller.min.js
+│   │   │   │   ├── dataTables.select.min.js
+│   │   │   │   ├── jszip.min.js
+│   │   │   │   ├── pdfmake.min.js
+│   │   │   │   ├── responsive.bootstrap4.min.js
+│   │   │   │   └── vfs_fonts.js
+│   │   │   └── datatables/
+│   │   │       ├── datatable.custom.js
+│   │   │       └── jquery.dataTables.min.js
+│   │   ├── datepicker/
+│   │   │   ├── date-picker/
+│   │   │   │   ├── datepicker.custom.js
+│   │   │   │   ├── datepicker.en.js
+│   │   │   │   └── datepicker.js
+│   │   │   ├── date-time-picker/
+│   │   │   │   ├── datetimepicker.custom.js
+│   │   │   │   ├── moment.min.js
+│   │   │   │   └── tempusdominus-bootstrap-4.min.js
+│   │   │   └── daterange-picker/
+│   │   │       ├── daterange-picker.custom.js
+│   │   │       ├── daterangepicker.js
+│   │   │       └── moment.min.js
+│   │   ├── dragable/
+│   │   │   ├── sortable-custom.js
+│   │   │   └── sortable.js
+│   │   ├── dropzone/
+│   │   │   ├── dropzone-script.js
+│   │   │   └── dropzone.js
+│   │   ├── editor/
+│   │   │   ├── ace-editor/
+│   │   │   │   ├── ace-custom.js
+│   │   │   │   ├── ace.js
+│   │   │   │   ├── mode-css.js
+│   │   │   │   ├── mode-html.js
+│   │   │   │   ├── mode-javascript.js
+│   │   │   │   ├── mode-php.js
+│   │   │   │   ├── theme-monokai.js
+│   │   │   │   ├── worker-css.js
+│   │   │   │   ├── worker-html.js
+│   │   │   │   ├── worker-javascript.js
+│   │   │   │   └── worker-php.js
+│   │   │   ├── ckeditor/
+│   │   │   │   ├── adapters/
+│   │   │   │   │   └── jquery.js
+│   │   │   │   ├── ckeditor.custom.js
+│   │   │   │   ├── ckeditor.js
+│   │   │   │   └── styles.js
+│   │   │   ├── simple-mde/
+│   │   │   │   ├── simplemde.custom.js
+│   │   │   │   └── simplemde.min.js
+│   │   │   └── summernote/
+│   │   │       ├── summernote.custom.js
+│   │   │       └── summernote.js
+│   │   ├── form-builder/
+│   │   │   ├── form-builder-1/
+│   │   │   │   ├── main-built.js
+│   │   │   │   └── require.js
+│   │   │   └── form-builder-2/
+│   │   │       ├── beautifyhtml.js
+│   │   │       └── form-builder-2.js
+│   │   ├── form-wizard/
+│   │   │   ├── form-wizard-three.js
+│   │   │   ├── form-wizard-two.js
+│   │   │   ├── form-wizard.js
+│   │   │   └── jquery.backstretch.min.js
+│   │   ├── icons/
+│   │   │   ├── feather-icon/
+│   │   │   │   ├── feather-icon-clipart.js
+│   │   │   │   ├── feather-icon.js
+│   │   │   │   └── feather.min.js
+│   │   │   ├── flag-icon-clipart.js
+│   │   │   ├── icon-clipart.js
+│   │   │   ├── icons-notify.js
+│   │   │   └── whether-icon-clipart.js
+│   │   ├── image-cropper/
+│   │   │   ├── cropper-main.js
+│   │   │   └── cropper.js
+│   │   ├── internationalization/
+│   │   │   └── language-picker.js
+│   │   ├── jarallax_libs/
+│   │   │   └── libs.min.js
+│   │   ├── jkanban/
+│   │   │   ├── custom.js
+│   │   │   └── jkanban.js
+│   │   ├── jsgrid/
+│   │   │   ├── griddata.js
+│   │   │   ├── jsgrid.js
+│   │   │   └── jsgrid.min.js
+│   │   ├── map-js/
+│   │   │   ├── custom.js
+│   │   │   ├── mapsjs-core.js
+│   │   │   ├── mapsjs-mapevents.js
+│   │   │   ├── mapsjs-service.js
+│   │   │   └── mapsjs-ui.js
+│   │   ├── notify/
+│   │   │   ├── bootstrap-notify.min.js
+│   │   │   ├── index.js
+│   │   │   └── notify-script.js
+│   │   ├── owlcarousel/
+│   │   │   ├── owl-custom.js
+│   │   │   └── owl.carousel.js
+│   │   ├── page-builder/
+│   │   │   ├── jquery.grideditor.min.js
+│   │   │   └── page-builder-custom.js
+│   │   ├── photoswipe/
+│   │   │   ├── photoswipe-ui-default.min.js
+│   │   │   ├── photoswipe.js
+│   │   │   └── photoswipe.min.js
+│   │   ├── prism/
+│   │   │   └── prism.min.js
+│   │   ├── range-slider/
+│   │   │   ├── ion.rangeSlider.min.js
+│   │   │   └── rangeslider-script.js
+│   │   ├── rating/
+│   │   │   ├── jquery.barrating.js
+│   │   │   └── rating-script.js
+│   │   ├── scrollable/
+│   │   │   ├── perfect-scrollbar.min.js
+│   │   │   └── scrollable-custom.js
+│   │   ├── select2/
+│   │   │   ├── select2-custom.js
+│   │   │   └── select2.full.min.js
+│   │   ├── slick-slider/
+│   │   │   ├── slick-theme.js
+│   │   │   └── slick.min.js
+│   │   ├── sticky/
+│   │   │   └── sticky.js
+│   │   ├── sweet-alert/
+│   │   │   ├── app.js
+│   │   │   └── sweetalert.min.js
+│   │   ├── theme-customizer/
+│   │   │   └── customizer.js
+│   │   ├── time-picker/
+│   │   │   ├── clockpicker.js
+│   │   │   ├── highlight.min.js
+│   │   │   └── jquery-clockpicker.min.js
+│   │   ├── timeline/
+│   │   │   ├── timeline-v-1/
+│   │   │   │   └── main.js
+│   │   │   └── timeline-v-2/
+│   │   │       ├── jquery.timeliny.min.js
+│   │   │       └── timeline-v-2-custom.js
+│   │   ├── todo/
+│   │   │   └── todo.js
+│   │   ├── touchspin/
+│   │   │   ├── input-groups.min.js
+│   │   │   ├── touchspin.js
+│   │   │   └── vendors.min.js
+│   │   ├── tour/
+│   │   │   ├── intro-init.js
+│   │   │   └── intro.js
+│   │   ├── tree/
+│   │   │   ├── jstree.min.js
+│   │   │   └── tree.js
+│   │   ├── typeahead/
+│   │   │   ├── handlebars.js
+│   │   │   ├── typeahead.bundle.js
+│   │   │   └── typeahead.custom.js
+│   │   ├── vector-map/
+│   │   │   ├── map/
+│   │   │   │   ├── jquery-jvectormap-asia-mill.js
+│   │   │   │   ├── jquery-jvectormap-au-mill.js
+│   │   │   │   ├── jquery-jvectormap-chicago-mill-en.js
+│   │   │   │   ├── jquery-jvectormap-in-mill.js
+│   │   │   │   ├── jquery-jvectormap-uk-mill-en.js
+│   │   │   │   ├── jquery-jvectormap-us-aea-en.js
+│   │   │   │   └── jquery-jvectormap-world-mill-en.js
+│   │   │   ├── jquery-jvectormap-2.0.2.min.js
+│   │   │   └── map-vector.js
+│   │   ├── chart-widget.js
+│   │   ├── config.js
+│   │   ├── countdown.js
+│   │   ├── ecommerce.js
+│   │   ├── email-app.js
+│   │   ├── form-validation-custom.js
+│   │   ├── fullscreen.js
+│   │   ├── general-widget.js
+│   │   ├── height-equal.js
+│   │   ├── isotope.pkgd.js
+│   │   ├── jquery-3.5.1.min.js
+│   │   ├── jquery.ui.min.js
+│   │   ├── landing.js
+│   │   ├── landing_sticky.js
+│   │   ├── masonry-gallery.js
+│   │   ├── modal-animated.js
+│   │   ├── modernizr.js
+│   │   ├── popover-custom.js
+│   │   ├── print.js
+│   │   ├── product-list-custom.js
+│   │   ├── product-tab.js
+│   │   ├── script.js
+│   │   ├── sidebar-menu.js
+│   │   ├── support-ticket-custom.js
+│   │   └── tooltip-init.js
+│   ├── .htaccess
+│   ├── favicon.ico  [EMPTY PLACEHOLDER]
+│   ├── index.php
+│   └── robots.txt
+├── resources/
+│   ├── css/
+│   │   ├── app.css
+│   │   └── dashboard.css  [EMPTY PLACEHOLDER]
+│   ├── js/
+│   │   ├── app.js
+│   │   ├── bootstrap.js
+│   │   └── dashboard.js  [EMPTY PLACEHOLDER]
+│   └── views/
+│       ├── auth/
+│       │   ├── confirm-password.blade.php
+│       │   ├── forgot-password.blade.php
+│       │   ├── login.blade.php
+│       │   ├── register.blade.php
+│       │   ├── reset-password.blade.php
+│       │   └── verify-email.blade.php
+│       ├── blueprints/
+│       │   ├── form.blade.php
+│       │   ├── index.blade.php
+│       │   └── questions.blade.php
+│       ├── components/
+│       │   ├── application-logo.blade.php
+│       │   ├── auth-session-status.blade.php
+│       │   ├── danger-button.blade.php
+│       │   ├── dropdown-link.blade.php
+│       │   ├── dropdown.blade.php
+│       │   ├── input-error.blade.php
+│       │   ├── input-label.blade.php
+│       │   ├── modal.blade.php
+│       │   ├── nav-link.blade.php
+│       │   ├── primary-button.blade.php
+│       │   ├── responsive-nav-link.blade.php
+│       │   ├── secondary-button.blade.php
+│       │   └── text-input.blade.php
+│       ├── dashboard/
+│       │   └── index.blade.php
+│       ├── exams/
+│       │   ├── answers.blade.php
+│       │   ├── index.blade.php
+│       │   ├── print.blade.php
+│       │   ├── settings.blade.php
+│       │   └── show.blade.php
+│       ├── institutions/
+│       │   ├── _partials/
+│       │   │   └── form.blade.php
+│       │   ├── create.blade.php
+│       │   ├── edit.blade.php
+│       │   ├── index.blade.php
+│       │   ├── show.blade.php
+│       │   └── trashed.blade.php
+│       ├── layouts/
+│       │   ├── admin.blade.php
+│       │   ├── app.blade.php
+│       │   ├── guest.blade.php
+│       │   ├── layouts.blade.php
+│       │   └── navigation.blade.php
+│       ├── online/
+│       │   ├── attempts.blade.php
+│       │   ├── grade.blade.php
+│       │   ├── index.blade.php
+│       │   └── take.blade.php
+│       ├── partials/
+│       │   ├── alerts.blade.php  [EMPTY PLACEHOLDER]
+│       │   ├── breadcrumb.blade.php  [EMPTY PLACEHOLDER]
+│       │   ├── footer.blade.php
+│       │   ├── navbar.blade.php
+│       │   └── sidebar.blade.php
+│       ├── profile/
+│       │   ├── partials/
+│       │   │   ├── delete-user-form.blade.php
+│       │   │   ├── update-password-form.blade.php
+│       │   │   └── update-profile-information-form.blade.php
+│       │   └── edit.blade.php
+│       ├── questions/
+│       │   ├── form.blade.php
+│       │   ├── index.blade.php
+│       │   ├── review-queue.blade.php
+│       │   └── show.blade.php
+│       ├── results/
+│       │   ├── form.blade.php
+│       │   ├── index.blade.php
+│       │   └── show.blade.php
+│       ├── subjects/
+│       │   ├── form.blade.php
+│       │   ├── index.blade.php
+│       │   └── show.blade.php
+│       ├── users/
+│       │   ├── _form.blade.php
+│       │   ├── create.blade.php
+│       │   ├── edit.blade.php
+│       │   ├── index.blade.php
+│       │   └── show.blade.php
+│       ├── years/
+│       │   └── index.blade.php
+│       ├── dashboard.blade.php
+│       └── welcome.blade.php
+├── routes/
+│   ├── auth.php
+│   ├── console.php
+│   └── web.php
+├── scripts/
+│   └── verify-source.sh
+├── storage/
+│   ├── app/
+│   │   ├── private/
+│   │   │   └── .gitignore
+│   │   ├── public/
+│   │   │   └── .gitignore
+│   │   └── .gitignore
+│   └── framework/
+│       ├── testing/
+│       │   └── .gitignore
+│       └── .gitignore
+├── tests/
+│   ├── Feature/
+│   │   ├── Auth/
+│   │   │   ├── AuthenticationTest.php
+│   │   │   ├── EmailVerificationTest.php
+│   │   │   ├── PasswordConfirmationTest.php
+│   │   │   ├── PasswordResetTest.php
+│   │   │   ├── PasswordUpdateTest.php
+│   │   │   └── RegistrationTest.php
+│   │   ├── BlueprintQuestionManagementTest.php
+│   │   ├── BlueprintRepairTest.php
+│   │   ├── DemoSeederTest.php
+│   │   ├── DomainWorkflowTest.php
+│   │   ├── ExamPaperTemplateTest.php
+│   │   ├── ExampleTest.php
+│   │   ├── ProfileTest.php
+│   │   ├── QuestionReviewQueueTest.php
+│   │   └── RegressionSafeguardsTest.php
+│   ├── Unit/
+│   │   ├── ExampleTest.php
+│   │   └── GradeServiceTest.php
+│   ├── Pest.php
+│   └── TestCase.php
+├── .editorconfig
+├── .env.example
+├── .gitattributes
+├── .gitignore
+├── ADMIN_PANEL_GUIDE.md
+├── artisan
+├── BUILD_VERIFICATION.md
+├── composer.json
+├── composer.lock
+├── CONTRIBUTING.md
+├── FACTORY_SEEDING_GUIDE.md
+├── FIXES_AND_VERIFICATION.md
+├── LICENSE  [EMPTY PLACEHOLDER]
+├── package-lock.json
+├── package.json
+├── phpstan.neon  [EMPTY PLACEHOLDER]
+├── phpunit.xml
+├── pint.json
+├── postcss.config.js
+├── PROJECT_MANIFEST.md
+├── PROJECT_README_ORIGINAL.md
+├── QUESTION_REVIEW_APPROVAL_FIX_GUIDE.md
+├── README.md
+├── SECURITY.md
+├── SEEDING_GUIDE.md
+├── tailwind.config.js
+└── vite.config.js
