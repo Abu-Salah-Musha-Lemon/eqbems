@@ -59,16 +59,12 @@
   <!-- page-wrapper Start-->
   <div class="page-wrapper compact-sidebar" id="pageWrapper">
     <!-- Page Header Start-->
-     @php
-      include_once resource_path('views/partials/navbar.blade.php');
-      @endphp
+     @include('partials.navbar')
     <!-- Page Header Ends -->
     <!-- Page Body Start-->
     <div class="page-body-wrapper sidebar-icon">
       <!-- Page Sidebar Start-->
-     @php
-      include_once resource_path('views/partials/sidebar.blade.php');
-      @endphp
+     @include('partials.sidebar')
       <!-- Page Sidebar Ends-->
       <div class="page-body">
         <!-- Container-fluid starts-->
@@ -79,9 +75,7 @@
         <!-- Container-fluid Ends-->
         <!-- Container-fluid Ends-->
       </div>
-      @php
-      include_once resource_path('views/partials/footer.blade.php');
-      @endphp
+      @include('partials.footer')
     </div>
   </div>
   <!-- latest jquery-->

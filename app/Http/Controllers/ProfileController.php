@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\OnlineExamAttempt;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,9 +50,21 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
-        Auth::logout();
+        // Preserve access to the system and prevent foreign-key failures or
+        // loss of student academic history. Perform these checks before logout.
+        if ($user->hasRole('Super Admin') && User::role('Super Admin')->count() <= 1) {
+            return back()->withErrors([
+                'password' => 'The last Super Admin account cannot be deleted.',
+            ], 'userDeletion');
+        }
+        if ($user->results()->exists() || OnlineExamAttempt::where('student_id', $user->id)->exists()) {
+            return back()->withErrors([
+                'password' => 'This account has academic records. Contact an administrator to manage access.',
+            ], 'userDeletion');
+        }
 
         $user->delete();
+        Auth::logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

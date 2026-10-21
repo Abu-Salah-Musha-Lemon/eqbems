@@ -20,7 +20,7 @@ class UpdateInstitutionRequest extends FormRequest
      */
     public function rules(): array
     {
-        $institutionId = $this->route('institution'); 
+        $institutionId = $this->route('institution')?->getKey(); 
         // this gets ID or model from route
 
         return [

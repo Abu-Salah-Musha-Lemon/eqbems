@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
@@ -23,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'institution_id',
     ];
 
     /**
@@ -40,6 +42,10 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+    public function results(): \Illuminate\Database\Eloquent\Relations\HasMany { return $this->hasMany(Result::class, 'student_id'); }
+
+    public function institution(): BelongsTo { return $this->belongsTo(Institution::class); }
+
     protected function casts(): array
     {
         return [

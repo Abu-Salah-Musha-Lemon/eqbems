@@ -23,15 +23,31 @@ class InstitutionController extends Controller
      */
     public function index(): View
     {
-    //    $this->authorize('viewAny', Institution::class);
+        $this->authorize('viewAny', Institution::class);
 
-        $institutions = $this->institutionService->paginate(10);
+        $institutions = $this->institutionService->paginate(10, auth()->user());
         // $institutions = $this->institutionService;
 
         return view(
             'institutions.index',
             compact('institutions')
         );
+    }
+
+    public function trashed(): View
+    {
+        $this->authorize('restore', new Institution);
+        return view('institutions.trashed', [
+            'institutions' => Institution::onlyTrashed()->latest('deleted_at')->paginate(15),
+        ]);
+    }
+
+    public function restore(string $uuid): RedirectResponse
+    {
+        $institution = Institution::onlyTrashed()->where('uuid', $uuid)->firstOrFail();
+        $this->authorize('restore', $institution);
+        $institution->restore();
+        return redirect()->route('institutions.trashed')->with('success', 'Institution restored.');
     }
 
     /**
@@ -57,7 +73,7 @@ class InstitutionController extends Controller
         );
 
         $this->institutionService
-            ->create($request->validated());
+            ->create(array_merge($request->validated(), ['created_by' => auth()->id(), 'updated_by' => auth()->id()]));
 
         return redirect()
             ->route('institutions.index')
@@ -68,6 +84,7 @@ class InstitutionController extends Controller
      */
     public function show(Institution $institution): View
     {
+        $this->authorize('view', $institution);
         return view('institutions.show', compact('institution'));
     }
 
@@ -95,7 +112,7 @@ class InstitutionController extends Controller
 
             $this->institutionService->update(
                 $institution,
-                $request->validated()
+                array_merge($request->validated(), ['updated_by' => auth()->id()])
             );
 
             return redirect()
@@ -115,47 +132,5 @@ class InstitutionController extends Controller
         return redirect()
             ->route('institutions.index')
             ->with('success', 'Institution deleted successfully.');
-    }
-
-    // Display trash
-    public function trash(): View
-    {
-        $this->authorize('viewAny', Institution::class);
-
-        $institutions = $this->institutionService->trashed(10);
-
-        return view('institutions.trash', compact('institutions'));
-    }
-
-    // Restore a soft-deleted institution
-    public function restore(string $uuid): RedirectResponse
-    {
-        $institution = Institution::onlyTrashed()
-            ->where('uuid', $uuid)
-            ->firstOrFail();
-
-        $this->authorize('restore', $institution);
-
-        $this->institutionService->restore($uuid);
-
-        return redirect()
-            ->route('institutions.trash')
-            ->with('success', 'Institution restored successfully.');
-    }
-
-    // Permanently delete an institution
-    public function forceDelete(string $uuid): RedirectResponse
-    {
-        $institution = Institution::onlyTrashed()
-            ->where('uuid', $uuid)
-            ->firstOrFail();
-
-        $this->authorize('forceDelete', $institution);
-
-        $this->institutionService->forceDelete($uuid);
-
-        return redirect()
-            ->route('institutions.trash')
-            ->with('success', 'Institution permanently deleted.');
     }
 }

@@ -504,20 +504,28 @@
             <div class="nav-label">Workspace</div>
             <a class="side-link {{ request()->routeIs('dashboard') ? 'active' : '' }}"
                 href="{{ route('dashboard') }}"><i class="bi bi-grid-1x2-fill"></i> Overview</a>
-            <a class="side-link {{ request()->routeIs('institutions.*') ? 'active' : '' }}"
-                href="{{ route('institutions.index') }}"><i class="bi bi-buildings"></i> Institutions</a>
+            @can('institution.view')
+            <a class="side-link {{ request()->routeIs('institutions.*') ? 'active' : '' }}" href="{{ route('institutions.index') }}"><i class="bi bi-buildings"></i> Institutions</a>
+            @endcan
+            @can('academic.view')
+            <div class="nav-label">Academic</div>
+            <a class="side-link {{ request()->routeIs('subjects.*') ? 'active' : '' }}" href="{{ route('subjects.index') }}"><i class="bi bi-book"></i> Subjects & topics</a>
+            <a class="side-link {{ request()->routeIs('academic-years.*') ? 'active' : '' }}" href="{{ route('academic-years.index') }}"><i class="bi bi-calendar3"></i> Academic years</a>
+            @endcan
             <div class="nav-label">Examination</div>
-            <a class="side-link" href="#question-bank" data-coming-soon="Question Bank"><i
-                    class="bi bi-journal-text"></i> Question bank <span
-                    class="ms-auto badge rounded-pill text-bg-secondary">Soon</span></a>
-            <a class="side-link" href="#examinations" data-coming-soon="Examinations"><i
-                    class="bi bi-clipboard2-check"></i> Examinations <span
-                    class="ms-auto badge rounded-pill text-bg-secondary">Soon</span></a>
-            <a class="side-link" href="#results" data-coming-soon="Results"><i class="bi bi-award"></i> Results <span
-                    class="ms-auto badge rounded-pill text-bg-secondary">Soon</span></a>
+            @can('question.view')<a class="side-link {{ request()->routeIs('questions.*') && !request()->routeIs('questions.review-queue') ? 'active' : '' }}" href="{{ route('questions.index') }}"><i class="bi bi-journal-text"></i> Question bank</a>@endcan
+            @can('question.view')
+                @can('question.review')
+                <a class="side-link {{ request()->routeIs('questions.review-queue') ? 'active' : '' }}" href="{{ route('questions.review-queue') }}"><i class="bi bi-check2-square"></i> Review questions</a>
+                @endcan
+            @endcan
+            @can('blueprint.view')<a class="side-link {{ request()->routeIs('blueprints.*') ? 'active' : '' }}" href="{{ route('blueprints.index') }}"><i class="bi bi-diagram-3"></i> Blueprints</a>@endcan
+            @can('exam.view')<a class="side-link {{ request()->routeIs('exams.*') ? 'active' : '' }}" href="{{ route('exams.index') }}"><i class="bi bi-clipboard2-check"></i> Examinations</a>@endcan
+            @role('Student')<a class="side-link {{ request()->routeIs('online-exams.*') ? 'active' : '' }}" href="{{ route('online-exams.index') }}"><i class="bi bi-laptop"></i> My online exams</a>@endrole
+            @can('result.mark')<a class="side-link {{ request()->routeIs('online-attempts.*') ? 'active' : '' }}" href="{{ route('online-attempts.index') }}"><i class="bi bi-pencil-square"></i> Grade online attempts</a>@endcan
+            <a class="side-link {{ request()->routeIs('results.*') ? 'active' : '' }}" href="{{ route('results.index') }}"><i class="bi bi-award"></i> Results</a>
             <div class="nav-label">System</div>
-            @if (\Illuminate\Support\Facades\Route::has('users.index')) <a class="side-link"
-                href="{{ route('users.index') }}"><i class="bi bi-people"></i> User management</a> @endif
+            @role('Super Admin')<a class="side-link {{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}"><i class="bi bi-people"></i> User management</a>@endrole
             <a class="side-link" href="{{ route('profile.edit') }}"><i class="bi bi-person-gear"></i> My profile</a>
             <div class="sidebar-bottom">
                 <div class="d-flex align-items-center gap-2 px-2">
@@ -578,25 +586,25 @@
     <script>
         (function () {
             const sidebar = document.getElementById('adminSidebar');
-            document.getElementById('sidebarToggle') ? .addEventListener('click', () => sidebar.classList.toggle(
+            document.getElementById('sidebarToggle')?.addEventListener('click', () => sidebar.classList.toggle(
                 'open'));
-            toastr.options = {
+            if (window.toastr) toastr.options = {
                 closeButton: true,
                 progressBar: true,
                 positionClass: 'toast-top-right',
                 timeOut: 3500
             };
-            @if(session('success')) toastr.success(@json(session('success')));
+            @if(session('success')) if (window.toastr) toastr.success(@json(session('success')));
             @endif
-            @if(session('error')) toastr.error(@json(session('error')));
+            @if(session('error')) if (window.toastr) toastr.error(@json(session('error')));
             @endif
-            @if(session('warning')) toastr.warning(@json(session('warning')));
+            @if(session('warning')) if (window.toastr) toastr.warning(@json(session('warning')));
             @endif
             document.querySelectorAll('[data-confirm]').forEach(el => el.addEventListener('click', async function (
                 e) {
                 e.preventDefault();
                 const form = this.closest('form');
-                const result = await Swal.fire({
+                const result = window.Swal ? await Swal.fire({
                     title: this.dataset.confirmTitle || 'Are you sure?',
                     text: this.dataset.confirm || 'This action cannot be undone.',
                     icon: 'warning',
@@ -606,21 +614,13 @@
                     confirmButtonText: this.dataset.confirmButton || 'Yes, continue',
                     cancelButtonText: 'Cancel',
                     reverseButtons: true
-                });
+                }) : {isConfirmed: window.confirm(this.dataset.confirm || 'Proceed?')};
                 if (result.isConfirmed) {
                     if (form) form.submit();
                     else if (this.href) window.location = this.href;
                 }
             }));
-            document.querySelectorAll('[data-coming-soon]').forEach(el => el.addEventListener('click', e => {
-                e.preventDefault();
-                Swal.fire({
-                    icon: 'info',
-                    title: el.dataset.comingSoon,
-                    text: 'This module is planned but is not implemented in the current project schema yet.',
-                    confirmButtonColor: '#4263eb'
-                });
-            }));
+
         })();
 
     </script>
