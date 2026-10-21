@@ -116,4 +116,46 @@ class InstitutionController extends Controller
             ->route('institutions.index')
             ->with('success', 'Institution deleted successfully.');
     }
+
+    // Display trash
+    public function trash(): View
+    {
+        $this->authorize('viewAny', Institution::class);
+
+        $institutions = $this->institutionService->trashed(10);
+
+        return view('institutions.trash', compact('institutions'));
+    }
+
+    // Restore a soft-deleted institution
+    public function restore(string $uuid): RedirectResponse
+    {
+        $institution = Institution::onlyTrashed()
+            ->where('uuid', $uuid)
+            ->firstOrFail();
+
+        $this->authorize('restore', $institution);
+
+        $this->institutionService->restore($uuid);
+
+        return redirect()
+            ->route('institutions.trash')
+            ->with('success', 'Institution restored successfully.');
+    }
+
+    // Permanently delete an institution
+    public function forceDelete(string $uuid): RedirectResponse
+    {
+        $institution = Institution::onlyTrashed()
+            ->where('uuid', $uuid)
+            ->firstOrFail();
+
+        $this->authorize('forceDelete', $institution);
+
+        $this->institutionService->forceDelete($uuid);
+
+        return redirect()
+            ->route('institutions.trash')
+            ->with('success', 'Institution permanently deleted.');
+    }
 }

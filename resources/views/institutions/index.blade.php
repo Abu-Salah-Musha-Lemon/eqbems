@@ -6,9 +6,11 @@
         <div class="eyebrow">Directory / Organizations</div>
         <h1 class="page-title">Institutions</h1>
         <p class="muted mb-0">Manage registered schools and education organizations.</p>
-    </div><a href="{{ route('institutions.create') }}" class="btn btn-primary"><i class="bi bi-plus-lg me-2"></i>Add
+    </div>
+        <a href="{{ route('institutions.create') }}" class="btn btn-primary"><i class="bi bi-plus-lg me-2"></i>Add
         institution</a>
-</div>
+        <a href="{{ route('institutions.trash') }}" class="btn btn-secondary"><i class="bi bi-plus-lg me-2"></i>View Trash </a>
+    </div>
 <div class="row g-3 mb-3">
     <div class="col-6 col-lg-3">
         <div class="card-pro p-3">

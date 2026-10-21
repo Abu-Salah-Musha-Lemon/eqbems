@@ -3,44 +3,35 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
-/**
- * Institution Model
- *
- * @property string $uuid
- * @property string $code
- * @property string $name
- * @property string|null $email
- * @property string|null $phone
- * @property string|null $website
- * @property string|null $logo
- * @property string|null $address
- * @property string|null $city
- * @property string|null $state
- * @property string|null $postal_code
- * @property string $country
- * @property bool $status
- */
 class Institution extends Model
 {
-    use HasUuids;
     use SoftDeletes;
 
     /**
-     * UUID হবে Route Key
+     * Automatically generate UUID when creating an institution.
+     */
+    protected static function booted(): void
+    {
+        static::creating(function (Institution $institution) {
+            if (empty($institution->uuid)) {
+                $institution->uuid = (string) Str::uuid();
+            }
+        });
+    }
+
+    /**
+     * UUID is used for route model binding.
      */
     public function getRouteKeyName(): string
     {
         return 'uuid';
     }
 
-    /**
-     * Mass Assignable
-     */
     protected $fillable = [
         'uuid',
         'code',
@@ -60,21 +51,12 @@ class Institution extends Model
         'updated_by',
     ];
 
-    /**
-     * Attribute Casting
-     */
     protected function casts(): array
     {
         return [
             'status' => 'boolean',
         ];
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Relationships
-    |--------------------------------------------------------------------------
-    */
 
     public function creator(): BelongsTo
     {
@@ -86,12 +68,6 @@ class Institution extends Model
         return $this->belongsTo(User::class, 'updated_by');
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Query Scopes
-    |--------------------------------------------------------------------------
-    */
-
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('status', true);
@@ -102,12 +78,6 @@ class Institution extends Model
         return $query->where('status', false);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Accessors
-    |--------------------------------------------------------------------------
-    */
-
     public function getFullAddressAttribute(): string
     {
         return collect([
@@ -116,9 +86,7 @@ class Institution extends Model
             $this->state,
             $this->postal_code,
             $this->country,
-        ])
-            ->filter()
-            ->implode(', ');
+        ])->filter()->implode(', ');
     }
 
     public function getLogoUrlAttribute(): string

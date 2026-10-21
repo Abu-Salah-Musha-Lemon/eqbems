@@ -25,7 +25,6 @@ Route::middleware([
 ])->group(function(){
 
     Route::resource('users',UserController::class);
-
 });
 
 // Route::middleware([
@@ -49,10 +48,13 @@ Route::middleware([
     'auth'
 ])->group(function () {
 
-    Route::resource(
-        'institutions',
-        InstitutionController::class
-    );
+    Route::resource('institutions',InstitutionController::class );
+
+    Route::get('/institutions/trash', [InstitutionController::class, 'trash'])->name('institutions.trash');
+
+    Route::patch('/institutions/{uuid}/restore', [InstitutionController::class, 'restore'])->name('institutions.restore');
+
+    Route::delete('/institutions/{uuid}/force-delete', [InstitutionController::class, 'forceDelete'])->name('institutions.forceDelete');
 
 });
 
